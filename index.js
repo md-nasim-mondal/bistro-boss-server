@@ -37,7 +37,7 @@ async function run() {
     app.post("/jwt", async (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "1h",
+        expiresIn: "1d",
       });
       res.send({ token });
     });
@@ -217,7 +217,7 @@ async function run() {
 
     app.get('/payments/:email', verifyToken, async (req, res) => {
       const email = req.params.email;
-      if (req.params.id !== req.decoded.email) {
+      if (req.params.email !== req.decoded.email) {
         return res.status(403).send({message: 'forbidden access'})
       }
       const query = {email: email}
